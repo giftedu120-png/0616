@@ -25,6 +25,13 @@
   );
   const earth = 6371;
   const dist = (a,b,c,d) => { const r=x=>x*Math.PI/180, q=r(c-a), w=r(d-b), v=Math.sin(q/2)**2+Math.cos(r(a))*Math.cos(r(c))*Math.sin(w/2)**2; return earth*2*Math.atan2(Math.sqrt(v),Math.sqrt(1-v)); };
+  const drivingDistance = async (from, beach) => {
+    const url = `https://router.project-osrm.org/route/v1/driving/${from.lng},${from.lat};${beach.lng},${beach.lat}?overview=false`;
+    const response = await fetch(url);
+    const route = await response.json();
+    if (!route.routes || !route.routes[0]) throw new Error('No route');
+    return route.routes[0].distance / 1000;
+  };
   const findProfile = filename => animalProfiles.find(p => p.words.some(word => filename.toLowerCase().includes(word))) || animalProfiles[4];
   const sourceRender = window.render;
   window.render = function () {
@@ -57,11 +64,19 @@
     const message = document.querySelector('#gps-message');
     if (!navigator.geolocation) { message.textContent='이 기기에서는 GPS를 지원하지 않습니다.'; return; }
     message.textContent='현재 위치를 확인하고 있습니다…';
-    navigator.geolocation.getCurrentPosition(pos => {
-      let closest = 0, best = Infinity;
-      beachLocations.forEach((beach, i) => { const km = dist(pos.coords.latitude,pos.coords.longitude,beach.lat,beach.lng); if(km<best){best=km;closest=i;} });
-      state.beach=closest; state.detail=null; window.render();
-      setTimeout(()=>{const m=document.querySelector('#gps-message');if(m)m.textContent=`${beachLocations[closest].name} 해수욕장 · 약 ${best.toFixed(1)}km`;},0);
+    navigator.geolocation.getCurrentPosition(async pos => {
+      const from = {lat:pos.coords.latitude, lng:pos.coords.longitude};
+      try {
+        const routes = await Promise.all(beachLocations.map(async (beach, index) => ({index, km:await drivingDistance(from, beach)})));
+        const nearest = routes.reduce((best, route) => route.km < best.km ? route : best);
+        state.beach=nearest.index; state.detail=null; window.render();
+        setTimeout(()=>{const m=document.querySelector('#gps-message');if(m){m.dataset.distance='1';m.textContent=`${beachLocations[nearest.index].name} 해수욕장 · 자동차 이동 ${nearest.km.toFixed(1)}km`;}} ,0);
+      } catch (error) {
+        let closest = 0, best = Infinity;
+        beachLocations.forEach((beach, i) => { const km = dist(from.lat,from.lng,beach.lat,beach.lng); if(km<best){best=km;closest=i;} });
+        state.beach=closest; state.detail=null; window.render();
+        setTimeout(()=>{const m=document.querySelector('#gps-message');if(m){m.dataset.distance='1';m.textContent=`${beachLocations[closest].name} 해수욕장 · 직선거리 ${best.toFixed(1)}km`;}} ,0);
+      }
     }, () => { message.textContent='위치 권한을 허용하면 가까운 해수욕장을 선택할 수 있습니다.'; }, {enableHighAccuracy:true,timeout:10000});
   };
   window.locate = window.locateNearestBeach;
