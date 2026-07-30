@@ -30,7 +30,7 @@
   window.render = function () {
     sourceRender();
     const brand = document.querySelector('.brand');
-    if (brand) brand.innerHTML = '바다<i>신호</i>';
+    if (brand) brand.innerHTML = '<span class="brand-orange">안전해</span><span>수욕장</span>';
     const waveLabel = document.querySelector('.stat span');
     if (waveLabel) waveLabel.textContent = '최대 파도';
     const score = Number(beaches[state.beach].score);
@@ -79,7 +79,7 @@
   const launchScreen = document.querySelector('.start');
   if (launchScreen) {
     const launchTitle = launchScreen.querySelector('h1');
-    if (launchTitle) launchTitle.textContent = '바다신호';
+    if (launchTitle) launchTitle.innerHTML = '<span class="title-orange">안전해</span><span class="title-white">수욕장</span>';
   } else {
     window.render();
   }
