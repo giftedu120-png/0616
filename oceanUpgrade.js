@@ -29,6 +29,8 @@
   const sourceRender = window.render;
   window.render = function () {
     sourceRender();
+    const brand = document.querySelector('.brand');
+    if (brand) brand.innerHTML = '바다<i>신호</i>';
     const waveLabel = document.querySelector('.stat span');
     if (waveLabel) waveLabel.textContent = '최대 파도';
     const score = Number(beaches[state.beach].score);
@@ -74,5 +76,11 @@
     document.body.insertAdjacentHTML('beforeend', `<div class="modal" onclick="if(event.target===this)this.remove()"><div class="sheet photo-result"><button class="icon-btn close" onclick="this.closest('.modal').remove()">×</button><h2>AI 해양생물 분석</h2><p>사진에서 확인한 관찰 결과입니다.</p><div class="species-result"><img src="${image}" alt="업로드한 해양생물 사진"><div><span class="confidence">분석 신뢰도 82%</span><h3>${animal.icon} ${animal.name}</h3><span class="risk-pill ${animal.tone}">위험도 ${animal.risk}</span></div></div><div class="result-line"><b>어떤 행동인가요?</b><span>${animal.behavior}</span></div><div class="result-line"><b>행동의 의미</b><span>${animal.meaning}</span></div><div class="action-box">💡 <b>이렇게 대처하세요</b><br>${animal.action}</div><span class="tag new">${first?'도감에 새 종을 기록했어요':'기존 종의 관찰 기록을 추가했어요'}</span></div></div>`);
   };
   const css=document.createElement('style'); css.textContent=`.gps-card{margin:0 16px 18px;padding:14px 15px;border:1px solid #b9dfdf;border-radius:18px;background:#e8f7f6;display:flex;align-items:center;justify-content:space-between;gap:12px}.gps-card>div{display:flex;align-items:center;gap:10px}.gps-icon{font-size:26px;color:var(--ocean)}.gps-card b{display:block;font-size:13px}.gps-card small{display:block;margin-top:3px;color:#477278;font-size:11px}.gps-card button{border:0;border-radius:11px;background:var(--deep);color:#fff;padding:10px 11px;font:inherit;font-size:12px;font-weight:700;white-space:nowrap}.journal-gallery{min-height:94px}.journal-empty{width:100%;border:1.5px dashed #9bcfce;border-radius:17px;padding:20px;text-align:center;color:var(--muted);font-size:12px;line-height:1.65}.photo-result h2{margin-bottom:3px}.species-result{display:flex;gap:13px;padding:12px;background:var(--surface);border-radius:17px;margin:16px 0}.species-result img{width:92px;height:92px;object-fit:cover;border-radius:12px}.species-result h3{font-size:18px;margin:8px 0}.confidence{font-size:11px;color:var(--ocean);font-weight:700}.risk-pill{display:inline-block;padding:4px 8px;border-radius:20px;font-size:11px;font-weight:700}.risk-pill.safe{background:#dbf2e4;color:#197247}.risk-pill.caution{background:#fff1cf;color:#986300}.risk-pill.danger{background:#ffe2dd;color:#b83a28}.result-line{border-top:1px solid var(--line);padding:12px 0}.result-line b{display:block;font-size:12px;margin-bottom:5px}.result-line span{font-size:13px;line-height:1.55;color:var(--muted)}.action-box{margin-top:2px;padding:13px;background:#eaf7f6;border-radius:13px;font-size:12px;line-height:1.65;color:#31646b}.action-box b{color:var(--ink)}.score-star{font-size:18px;background:linear-gradient(90deg,#f7b928 var(--fill),#dbe3e6 var(--fill));-webkit-background-clip:text;background-clip:text;color:transparent;letter-spacing:0}.stars{display:flex;gap:1px}.sheet .choice{color:var(--ink);background:var(--surface);border-color:var(--line)}.sheet .choice.active{background:var(--deep);border-color:var(--deep);color:#fff}body.dark .gps-card,body.dark .action-box{background:#173c44}body.dark .gps-card small,body.dark .action-box{color:#c4e7e5}body.dark .sheet .choice{color:#fff;background:#263b46;border-color:#58707c}body.dark .sheet .choice.active{background:#fff;color:#075873;border-color:#fff}`; document.head.appendChild(css);
-  window.render();
+  const launchScreen = document.querySelector('.start');
+  if (launchScreen) {
+    const launchTitle = launchScreen.querySelector('h1');
+    if (launchTitle) launchTitle.textContent = '바다신호';
+  } else {
+    window.render();
+  }
 }());
