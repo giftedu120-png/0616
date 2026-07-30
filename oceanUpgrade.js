@@ -3,7 +3,11 @@
   const beachLocations = [
     { name:'해운대', lat:35.1587, lng:129.1604 },
     { name:'광안리', lat:35.1531, lng:129.1186 },
-    { name:'송정', lat:35.1781, lng:129.1993 }
+    { name:'송정', lat:35.1781, lng:129.1993 },
+    { name:'다대포', lat:35.0462, lng:128.9650 },
+    { name:'송도', lat:35.0765, lng:129.0208 },
+    { name:'일광', lat:35.2643, lng:129.2334 },
+    { name:'임랑', lat:35.3184, lng:129.2643 }
   ];
   const animalProfiles = [
     { id:'crab', name:'게', icon:'🦀', words:['crab','게'], risk:'낮음', tone:'safe', behavior:'모래 위로 나와 빠르게 이동하고 있어요.', meaning:'먹이 활동이나 조수·기압 변화에 반응하는 일반적인 행동일 수 있어요.', action:'만지지 말고 이동 경로를 비워 두세요.' },
@@ -12,6 +16,13 @@
     { id:'starfish', name:'불가사리', icon:'⭐', words:['starfish','불가사리'], risk:'낮음', tone:'safe', behavior:'바위나 모래 위에서 천천히 이동하고 있어요.', meaning:'먹이를 찾거나 서식처 안에서 이동하는 모습이에요.', action:'사진만 남기고, 들어 올리거나 옮기지 마세요.' },
     { id:'fish', name:'물고기 떼', icon:'🐟', words:['fish','물고기'], risk:'보통', tone:'caution', behavior:'수면 가까이에서 무리 지어 빠르게 이동하고 있어요.', meaning:'먹이 활동 또는 포식자를 피하는 반응일 수 있어요.', action:'해안 가까이에서 관찰하고 현장 안전 안내를 확인하세요.' }
   ];
+  /* Keep the existing beach tabs and safety cards in the same index order. */
+  beaches.push(
+    {n:'다대포',score:'4.2',wave:'0.6m',temp:'25.4°C',wind:'2.9m/s',inc:4,reasons:[['이안류·높은 파도',1,'조류가 강해질 수 있으니 안전 깃발을 확인하세요.'],['안전구역 이탈',2,'부표 안쪽에서만 물놀이하세요.'],['음주·무리한 입수',1,'음주 후 입수는 피하세요.']]},
+    {n:'송도',score:'4.1',wave:'0.6m',temp:'25.2°C',wind:'3.1m/s',inc:6,reasons:[['이안류·높은 파도',2,'파도 상태를 확인하고 깊은 곳은 피하세요.'],['안전구역 이탈',2,'안전요원 안내 구역을 지켜주세요.'],['음주·무리한 입수',2,'피로하거나 음주했다면 물에 들어가지 마세요.']]},
+    {n:'일광',score:'4.4',wave:'0.4m',temp:'25.3°C',wind:'2.1m/s',inc:3,reasons:[['안전구역 이탈',1,'안전 부표 바깥으로 나가지 마세요.'],['이안류·높은 파도',1,'파도 변화 시 즉시 해안으로 돌아오세요.'],['음주·무리한 입수',1,'혼자 수영하지 마세요.']]},
+    {n:'임랑',score:'4.0',wave:'0.8m',temp:'25.0°C',wind:'3.9m/s',inc:5,reasons:[['이안류·높은 파도',2,'파도와 조류 변화를 주의하세요.'],['안전구역 이탈',2,'수심이 깊어지는 구간을 피하세요.'],['음주·무리한 입수',1,'구명조끼를 착용하세요.']]}
+  );
   const earth = 6371;
   const dist = (a,b,c,d) => { const r=x=>x*Math.PI/180, q=r(c-a), w=r(d-b), v=Math.sin(q/2)**2+Math.cos(r(a))*Math.cos(r(c))*Math.sin(w/2)**2; return earth*2*Math.atan2(Math.sqrt(v),Math.sqrt(1-v)); };
   const findProfile = filename => animalProfiles.find(p => p.words.some(word => filename.toLowerCase().includes(word))) || animalProfiles[4];
