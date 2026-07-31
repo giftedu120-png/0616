@@ -144,7 +144,8 @@
       const labels = sheet.querySelectorAll('.choose-label'); setText(labels[0], p.chooseLang); setText(labels[1], p.chooseTheme);
       sheet.querySelectorAll('.choice').forEach((button, i) => { if (i < 4) setText(button, languageNames[lang][i]); else setText(button, i === 4 ? p.light : p.dark); });
     }
-    if (lang !== 'ko') { document.querySelector('.incident-manager')?.remove(); document.querySelector('.incident-detail') && setText(document.querySelector('.incident-detail'), p.detail); }
+    document.querySelector('.incident-manager')?.remove();
+    if (lang !== 'ko' && document.querySelector('.incident-detail')) setText(document.querySelector('.incident-detail'), p.detail);
   }
   window.localizeDataNotes = apply;
   apply();
