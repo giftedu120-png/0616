@@ -1,0 +1,3 @@
+name = "safe-beach-ai-proxy"
+main = "src/index.js"
+compatibility_date = "2026-07-31"
