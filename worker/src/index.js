@@ -17,7 +17,7 @@ export default {
       const prompt = `You are a marine biologist and beach-safety expert. Analyze the image carefully. Return only a JSON object in Korean with these keys: speciesName, scientificName, emoji, behavior, meaning, riskLevel (low|medium|high), riskReason, advice, confidence. Identify only organisms visible in the image; if there is no marine organism, use speciesName '해양생물 미확인' and explain why.`;
       const openai = await fetch('https://api.openai.com/v1/responses', {
         method:'POST', headers:{'Authorization':`Bearer ${env.OPENAI_API_KEY}`,'Content-Type':'application/json'},
-        body:JSON.stringify({model:'gpt-5.6-luna',input:[{role:'user',content:[{type:'input_text',text:prompt},{type:'input_image',image_url:image}]}]})
+        body:JSON.stringify({model:'gpt-4o-mini',input:[{role:'user',content:[{type:'input_text',text:prompt},{type:'input_image',image_url:image}]}]})
       });
       if (!openai.ok) return json({error:'AI 분석 서비스에 일시적인 문제가 있습니다.'},502,origin);
       const payload=await openai.json();
