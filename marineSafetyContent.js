@@ -70,7 +70,7 @@
   function applyMarineSafetyContent() {
     const p = language();
     const sections = [...document.querySelectorAll('.section')];
-    const incidentSection = sections.find(section => section.querySelector('.accident'));
+    const incidentSection = sections.find(section => section.querySelector('.accident, .marine-watch'));
     if (incidentSection) {
       const title = incidentSection.querySelector('.section-head h2');
       const sub = incidentSection.querySelector('.section-head .sub');
