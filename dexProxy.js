@@ -1,6 +1,6 @@
 /* Public page client: sends photos to the private Worker, never directly to an AI provider. */
 (function () {
-  const AI_PROXY_URL = 'https://safe-beach-ai-proxy.YOUR_SUBDOMAIN.workers.dev/analyze';
+  const AI_PROXY_URL = 'https://safe-beach-ai-proxy.leekangjoon2009.workers.dev/analyze';
   const keyBox = document.querySelector('.key');
   if (keyBox) keyBox.remove();
   document.querySelector('.note')?.remove();
