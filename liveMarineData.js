@@ -39,6 +39,7 @@
     let note=document.querySelector('.live-data-note');
     if (!note) { note=document.createElement('p'); note.className='live-data-note'; document.querySelector('.stats')?.insertAdjacentElement('afterend',note); }
     note.textContent=label;
+    window.localizeDataNotes?.();
   }
   function markIncidentSource() {
     const card=document.querySelector('.accident'); if (!card || document.querySelector('.incident-data-note')) return;
