@@ -52,6 +52,37 @@
   };
   const languageNames = {ko:['한국어','English','日本語','中文'],en:['Korean','English','Japanese','Chinese'],ja:['韓国語','英語','日本語','中国語'],zh:['韩语','英语','日语','中文']};
   const languageCodes = ['ko','en','ja','zh'];
+  const emergencyTips = {
+    ko:[
+      ['입수 전 10분 확인','파도·풍속·안전 깃발을 확인하고, 혼자 먼 곳까지 들어가지 마세요.'],
+      ['물에 빠진 사람을 보면','직접 뛰어들기보다 119와 안전요원에게 알리고, 튜브·페트병처럼 뜨는 물건을 던져 주세요.'],
+      ['해파리에 쏘였을 때','바닷물로 촉수를 씻어내고 문지르지 마세요. 통증이나 호흡 이상이 있으면 즉시 119에 연락하세요.'],
+      ['이안류에 휩쓸렸을 때','해안과 평행한 방향으로 이동해 흐름을 벗어난 뒤, 팔을 들어 도움을 요청하세요.'],
+      ['어린이와 물놀이할 때','보호자는 어린이와 팔이 닿는 거리를 유지하고, 구명조끼를 반드시 착용시켜 주세요.']
+    ],
+    en:[
+      ['Check conditions for 10 minutes','Check waves, wind and safety flags before entering. Do not swim far out alone.'],
+      ['If you see someone in trouble','Call 119 and alert a lifeguard. Throw a floating object instead of entering the water yourself.'],
+      ['If stung by a jellyfish','Rinse tentacles with seawater and do not rub. Call 119 immediately for severe pain or breathing problems.'],
+      ['If caught in a rip current','Move parallel to shore to leave the current, then raise an arm and call for help.'],
+      ['Swimming with children','Stay within arm’s reach and make sure every child wears a life jacket.']
+    ],
+    ja:[
+      ['入水前に10分確認','波・風・安全旗を確認し、1人で沖まで行かないでください。'],
+      ['おぼれている人を見かけたら','自分で飛び込まず、119とライフガードに知らせ、浮く物を投げてください。'],
+      ['クラゲに刺されたら','海水で触手を洗い流し、こすらないでください。強い痛みや呼吸の異常は直ちに119へ。'],
+      ['離岸流に流されたら','岸と平行に移動して流れから抜け、腕を上げて助けを求めてください。'],
+      ['子どもと海水浴するとき','保護者は子どもの腕が届く距離を保ち、必ずライフジャケットを着用させてください。']
+    ],
+    zh:[
+      ['下水前确认10分钟','请确认波浪、风速和安全旗帜，不要独自游向深水区。'],
+      ['看到有人遇险时','不要贸然下水，请拨打119并通知救生员，同时抛出救生圈等漂浮物。'],
+      ['被水母蜇伤时','用海水冲洗触手，不要揉搓。若疼痛严重或呼吸异常，请立即拨打119。'],
+      ['被离岸流卷走时','沿着与海岸平行的方向游出水流，再举起手臂呼救。'],
+      ['与儿童戏水时','监护人应始终保持一臂距离，并确保儿童穿着救生衣。']
+    ]
+  };
+  const tipIndex = Math.floor(Math.random() * emergencyTips.ko.length);
   const t = () => locales[state.lang] || locales.ko;
   const setText = (node, value) => { if (node) node.textContent = value; };
   const setHTML = (node, value) => { if (node) node.innerHTML = value; };
@@ -95,7 +126,10 @@
     document.querySelectorAll('.reason span').forEach((node, i) => setText(node, reasons[lang][i] || reasons[lang][4]));
     setText(document.querySelector('.empty-incidents'), p.noIncidents);
     setText(document.querySelector('.incident-data-note'), p.incidentNote);
-    document.querySelectorAll('.tips .tip').forEach((tip, i) => { setText(tip.querySelector('strong'), i ? p.guide2 : p.guide1); setText(tip.querySelector('p'), i ? p.guide2t : p.guide1t); });
+    document.querySelectorAll('.tips .tip').forEach((tip, i) => {
+      const advice = emergencyTips[lang][(tipIndex + i) % emergencyTips[lang].length];
+      setText(tip.querySelector('strong'), advice[0]); setText(tip.querySelector('p'), advice[1]);
+    });
     document.querySelectorAll('.badge small').forEach(node => setText(node, p.observed));
     setHTML(document.querySelector('.journal-empty'), p.empty);
     setText(document.querySelector('.field h3'), p.journal); setText(document.querySelector('.field p'), p.journalText);
@@ -115,6 +149,6 @@
   window.localizeDataNotes = apply;
   apply();
   const style = document.createElement('style');
-  style.textContent = `body.locale-en{--ocean:#146c94;--deep:#0e4c6c}body.locale-ja{--ocean:#a84b56;--deep:#74333c}body.locale-zh{--ocean:#16816f;--deep:#0d5c51}.start h1{font-size:40px!important}.start h1::after{content:none!important}.locale-en .start,.locale-en .hero{background-image:linear-gradient(135deg,#0e4c6c,#146c94)}.locale-ja .start,.locale-ja .hero{background-image:linear-gradient(135deg,#74333c,#a84b56)}.locale-zh .start,.locale-zh .hero{background-image:linear-gradient(135deg,#0d5c51,#16816f)}`;
+  style.textContent = `.title-white{color:#63d5ff!important;text-shadow:0 1px 12px #0a78a655}.top .brand .title-white{color:#63d5ff!important}.start h1{font-size:40px!important}.start h1::after{content:none!important}body.locale-en{--ocean:#146c94;--deep:#0e4c6c}body.locale-ja{--ocean:#a84b56;--deep:#74333c}body.locale-zh{--ocean:#16816f;--deep:#0d5c51}.locale-en .start,.locale-en .hero{background-image:linear-gradient(135deg,#0e4c6c,#146c94)}.locale-ja .start,.locale-ja .hero{background-image:linear-gradient(135deg,#74333c,#a84b56)}.locale-zh .start,.locale-zh .hero{background-image:linear-gradient(135deg,#0d5c51,#16816f)}`;
   document.head.appendChild(style);
 }());
