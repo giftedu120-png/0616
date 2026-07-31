@@ -34,7 +34,5 @@
     set('.gps-card b',p.gpsTitle); set('.gps-card button',p.gpsButton);
     const gps=document.querySelector('#gps-message'); if(gps && !gps.dataset.distance) gps.textContent=p.gpsText;
   }
-  const observer = new MutationObserver(() => { queueMicrotask(() => { applyLaunch(); apply(); }); });
-  observer.observe(document.querySelector('#app'), {childList:true, subtree:true});
   apply();
 }());
