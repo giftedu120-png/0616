@@ -99,6 +99,13 @@
 
   const previousRender = window.render;
   window.render = function () { previousRender(); applyMarineSafetyContent(); };
+  // Live environmental data re-applies the language labels after each beach change.
+  // Re-apply this section afterwards so its title never turns back into an incident label.
+  const previousLocalizeDataNotes = window.localizeDataNotes;
+  window.localizeDataNotes = function () {
+    previousLocalizeDataNotes?.();
+    applyMarineSafetyContent();
+  };
   applyMarineSafetyContent();
 
   const style = document.createElement('style');
