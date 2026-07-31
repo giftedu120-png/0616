@@ -1,6 +1,6 @@
 /* Seamless hand-off from Safe Beach's journal card to the Lovable journal app. */
 (function () {
-  const lovableJournalUrl='https://lovable.dev/projects/b6429851-01a5-45f1-8c71-96c7d80aa8fb?view=files&file=safe-beach.html';
+  const lovableJournalUrl='./dex.html';
   const baseRender=window.render;
   window.render=function(){baseRender();addJournalLink();};
   function addJournalLink(){
@@ -9,8 +9,8 @@
     const link=document.createElement('button');
     link.className='lovable-journal-link';
     link.type='button';
-    link.innerHTML='✦ 더 자세한 도감 보기 <span>→</span>';
-    link.setAttribute('aria-label','Lovable 도감 페이지 열기');
+    link.innerHTML='✦ 나의 바다 도감 열기 <span>→</span>';
+    link.setAttribute('aria-label','나의 바다 도감 페이지 열기');
     link.onclick=()=>{window.location.href=lovableJournalUrl;};
     field.appendChild(link);
   }
