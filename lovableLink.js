@@ -1,6 +1,6 @@
 /* Seamless hand-off from Safe Beach's journal card to the Lovable journal app. */
 (function () {
-  const lovableJournalUrl='./dex.html';
+  const lovableJournalUrl='https://shore-scribe.lovable.app/';
   const baseRender=window.render;
   window.render=function(){baseRender();cleanJournalArea();addJournalLink();};
   function cleanJournalArea(){
